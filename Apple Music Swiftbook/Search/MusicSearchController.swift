@@ -1,5 +1,5 @@
 //
-//  ViewController.swift
+//  MusicSearchController.swift
 //  Apple Music Swiftbook
 //
 //  Created by Алексей Пархоменко on 17/07/2019.
@@ -7,18 +7,13 @@
 //
 
 import UIKit
-import Alamofire
-import SDWebImage
 
-class ViewController: UIViewController {
-
+class MusicSearchController: UITableViewController {
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
-        
-        view.backgroundColor = .white
     }
-
-
 }
+
 
