@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		D62184778CAB1CCF051989A4 /* Pods_Apple_Music_Swiftbook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F652A24CE3B86A8D745541CB /* Pods_Apple_Music_Swiftbook.framework */; };
 		F0870CC922E0F44900662E44 /* SearchResults.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0870CC822E0F44900662E44 /* SearchResults.swift */; };
+		F0870CCD22E3384300662E44 /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0870CCC22E3384300662E44 /* NetworkService.swift */; };
 		F0DD1BEC22DF3CA900DCD102 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0DD1BEB22DF3CA900DCD102 /* AppDelegate.swift */; };
 		F0DD1BEE22DF3CA900DCD102 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0DD1BED22DF3CA900DCD102 /* SceneDelegate.swift */; };
 		F0DD1BF022DF3CA900DCD102 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0DD1BEF22DF3CA900DCD102 /* ViewController.swift */; };
@@ -23,6 +24,7 @@
 		227B93BCCACFF39DDBBBEECF /* Pods-Apple Music Swiftbook.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Apple Music Swiftbook.release.xcconfig"; path = "Target Support Files/Pods-Apple Music Swiftbook/Pods-Apple Music Swiftbook.release.xcconfig"; sourceTree = "<group>"; };
 		838C0ECFCA560CA5B3432749 /* Pods-Apple Music Swiftbook.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Apple Music Swiftbook.debug.xcconfig"; path = "Target Support Files/Pods-Apple Music Swiftbook/Pods-Apple Music Swiftbook.debug.xcconfig"; sourceTree = "<group>"; };
 		F0870CC822E0F44900662E44 /* SearchResults.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchResults.swift; sourceTree = "<group>"; };
+		F0870CCC22E3384300662E44 /* NetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
 		F0DD1BE822DF3CA900DCD102 /* Apple Music Swiftbook.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Apple Music Swiftbook.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		F0DD1BEB22DF3CA900DCD102 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		F0DD1BED22DF3CA900DCD102 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -65,6 +67,23 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		F0870CCA22E337A400662E44 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				F0870CCB22E337AF00662E44 /* Models */,
+				F0870CCC22E3384300662E44 /* NetworkService.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		F0870CCB22E337AF00662E44 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				F0870CC822E0F44900662E44 /* SearchResults.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
 		F0DD1BDF22DF3CA900DCD102 = {
 			isa = PBXGroup;
 			children = (
@@ -86,10 +105,10 @@
 		F0DD1BEA22DF3CA900DCD102 /* Apple Music Swiftbook */ = {
 			isa = PBXGroup;
 			children = (
+				F0870CCA22E337A400662E44 /* Services */,
 				F0DD1BEB22DF3CA900DCD102 /* AppDelegate.swift */,
 				F0DD1BED22DF3CA900DCD102 /* SceneDelegate.swift */,
 				F0DD1BFF22DF3F0400DCD102 /* MainTabBarController.swift */,
-				F0870CC822E0F44900662E44 /* SearchResults.swift */,
 				F0DD1C0322DF4E9600DCD102 /* Search */,
 				F0DD1BEF22DF3CA900DCD102 /* ViewController.swift */,
 				F0DD1BF122DF3CA900DCD102 /* Main.storyboard */,
@@ -229,6 +248,7 @@
 				F0DD1BEC22DF3CA900DCD102 /* AppDelegate.swift in Sources */,
 				F0DD1C0022DF3F0400DCD102 /* MainTabBarController.swift in Sources */,
 				F0DD1BEE22DF3CA900DCD102 /* SceneDelegate.swift in Sources */,
+				F0870CCD22E3384300662E44 /* NetworkService.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -13,6 +13,8 @@ class MusicSearchController: UITableViewController {
     
     let searchController = UISearchController(searchResultsController: nil)
     
+    var networkService = NetworkService()
+    
     fileprivate var timer: Timer?
     
     var tracks = [Track(trackName: "bad guy", artistName: "Billie Eilish"),
@@ -59,29 +61,15 @@ extension MusicSearchController: UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         print(searchText)
         
-        let url = "https://itunes.apple.com/search"
-        let parameters = ["term": searchText, "media": "music"]
-        
-        
-        Alamofire.request(url, method: .get, parameters: parameters, encoding: URLEncoding.default, headers: nil).responseData { (dataResponse) in
-            if let error = dataResponse.error {
-                print("Error received requesting data: \(error.localizedDescription)")
-                return
+        timer?.invalidate()
+        timer = Timer.scheduledTimer(withTimeInterval: 0.5, repeats: false, block: { (_) in
+            self.networkService.fetchTracks(searchText: searchText) { [weak self] (searchResults) in
+                self?.tracks = searchResults?.results ?? []
+                self?.tableView.reloadData()
             }
-                
-                guard let data = dataResponse.data else { return }
-            
-                let decoder = JSONDecoder()
-                do {
-                    let objects = try decoder.decode(SearchResults.self, from: data)
-                    print("objects:\(objects)")
-                    self.tracks = objects.results
-                    self.tableView.reloadData()
-                } catch let jsonError {
-                    print("Failed to decode JSON", jsonError)
-                    
-                }
-        }
+        })
+        
+        
     }
 }
 
