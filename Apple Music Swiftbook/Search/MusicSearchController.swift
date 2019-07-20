@@ -13,7 +13,9 @@ class MusicSearchController: UITableViewController {
     
     let searchController = UISearchController(searchResultsController: nil)
     
-    let tracks = [Track(trackName: "bad guy", artistName: "Billie Eilish"),
+    fileprivate var timer: Timer?
+    
+    var tracks = [Track(trackName: "bad guy", artistName: "Billie Eilish"),
                   Track(trackName: "bury a friend", artistName: "Billie Eilish")
     ]
     
@@ -27,6 +29,7 @@ class MusicSearchController: UITableViewController {
     fileprivate func setupSearchBar() {
         navigationItem.searchController = searchController
         navigationItem.hidesSearchBarWhenScrolling = false
+        searchController.dimsBackgroundDuringPresentation = false
         searchController.searchBar.delegate = self
     }
     
@@ -43,7 +46,7 @@ class MusicSearchController: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cellId", for: indexPath)
         let track = tracks[indexPath.row]
-        cell.textLabel?.text = "\(track.trackName)\n\(track.artistName)"
+        cell.textLabel?.text = "\(track.trackName ?? "")\n\(track.artistName ?? "")"
         cell.textLabel?.numberOfLines = 2
         cell.imageView?.image = #imageLiteral(resourceName: "appicon")
         return cell
@@ -56,18 +59,31 @@ extension MusicSearchController: UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         print(searchText)
         
-        let url = "https://itunes.apple.com/search?term=\(searchText)"
-        Alamofire.request(url).responseData { (dataResponse) in
+        let url = "https://itunes.apple.com/search"
+        let parameters = ["term": searchText, "media": "music"]
+        
+        
+        Alamofire.request(url, method: .get, parameters: parameters, encoding: URLEncoding.default, headers: nil).responseData { (dataResponse) in
             if let error = dataResponse.error {
                 print("Error received requesting data: \(error.localizedDescription)")
                 return
             }
                 
                 guard let data = dataResponse.data else { return }
-                let someString = String(data: data, encoding: .utf8)
-                print(someString ?? "")
+            
+                let decoder = JSONDecoder()
+                do {
+                    let objects = try decoder.decode(SearchResults.self, from: data)
+                    print("objects:\(objects)")
+                    self.tracks = objects.results
+                    self.tableView.reloadData()
+                } catch let jsonError {
+                    print("Failed to decode JSON", jsonError)
+                    
+                }
         }
     }
 }
+
 
 

@@ -8,9 +8,14 @@
 
 import Foundation
 
+struct SearchResults: Decodable {
+    var resultCount: Int
+    var results: [Track]
+}
+
 struct Track: Decodable {
-    let trackName: String
-    let artistName: String
+    let trackName: String?
+    let artistName: String?
 }
 
 
