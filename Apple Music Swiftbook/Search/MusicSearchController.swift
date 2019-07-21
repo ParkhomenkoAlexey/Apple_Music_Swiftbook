@@ -17,9 +17,7 @@ class MusicSearchController: UITableViewController {
     
     fileprivate var timer: Timer?
     
-    var tracks = [Track(trackName: "bad guy", artistName: "Billie Eilish"),
-                  Track(trackName: "bury a friend", artistName: "Billie Eilish")
-    ]
+    var tracks = [Track]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -36,7 +34,8 @@ class MusicSearchController: UITableViewController {
     }
     
     fileprivate func setupTableView() {
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cellId")
+        let nib = UINib(nibName: "TrackCell", bundle: nil)
+        tableView.register(nib, forCellReuseIdentifier: TrackCell.reuseId)
     }
     
     // MARK: - UITableViewDelegate, UITableViewDataSource
@@ -46,14 +45,19 @@ class MusicSearchController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "cellId", for: indexPath)
         let track = tracks[indexPath.row]
-        cell.textLabel?.text = "\(track.trackName ?? "")\n\(track.artistName ?? "")"
-        cell.textLabel?.numberOfLines = 2
-        cell.imageView?.image = #imageLiteral(resourceName: "appicon")
+        let cell = tableView.dequeueReusableCell(withIdentifier: TrackCell.reuseId, for: indexPath) as! TrackCell
+        
+        cell.set(track: track)
         return cell
     }
+    
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 132
+    }
 }
+
+
 
 // MARK: - UISearchBarDelegate
 
@@ -65,11 +69,12 @@ extension MusicSearchController: UISearchBarDelegate {
         timer = Timer.scheduledTimer(withTimeInterval: 0.5, repeats: false, block: { (_) in
             self.networkService.fetchTracks(searchText: searchText) { [weak self] (searchResults) in
                 self?.tracks = searchResults?.results ?? []
+                searchResults?.results.map({ (track) in
+                    print("wrapperType: \(track.wrapperType ?? "nil") trackName: \(track.trackName ?? "nil")")
+                })
                 self?.tableView.reloadData()
             }
         })
-        
-        
     }
 }
 

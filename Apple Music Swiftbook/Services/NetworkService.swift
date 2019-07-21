@@ -14,7 +14,9 @@ class NetworkService {
     func fetchTracks(searchText: String, completion: @escaping (SearchResults?) -> Void) {
         
         let url = "https://itunes.apple.com/search"
-        let parameters = ["term": searchText, "media": "music"]
+        let parameters = ["term": searchText,
+                          "media": "music",
+                          "entity": "musicTrack, album"]
         Alamofire.request(url, method: .get, parameters: parameters, encoding: URLEncoding.default, headers: nil).responseData { (dataResponse) in
             if let error = dataResponse.error {
                 print("Error received requesting data: \(error.localizedDescription)")
@@ -27,7 +29,7 @@ class NetworkService {
             let decoder = JSONDecoder()
             do {
                 let objects = try decoder.decode(SearchResults.self, from: data)
-                print("objects:\(objects)")
+                //print("objects:\(objects)")
                 completion(objects)
             } catch let jsonError {
                 print("Failed to decode JSON", jsonError)
